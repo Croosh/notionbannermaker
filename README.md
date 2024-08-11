@@ -1,5 +1,7 @@
 # Notion Banner Generator
 
+A simple web app with React to design banners for Notion pages.
+
 ## Goals
 
 Major Goals for the project:
