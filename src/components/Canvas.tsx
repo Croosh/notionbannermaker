@@ -1,49 +1,66 @@
-import { useContext, useEffect, useRef } from "react";
+import React, { forwardRef, useContext, useEffect } from "react";
 import { DataContext } from "../lib/context";
 
-const Canvas = () => {
-  const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const context = useContext(DataContext);
-  const bannerSize = {
-    w: 1500,
-    h: 600,
-  };
-  useEffect(() => {
-    if (canvasRef.current) {
-      const ctx = canvasRef.current.getContext("2d");
-      if (ctx) {
-        // Set background color
-        ctx.fillStyle = context?.data.background.color as string;
-        ctx.fillRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        // Primary Text
-        ctx.font = "50px Arial";
-        ctx.fillStyle = "#000000";
-        const ptext = context?.data.texts.primary?.text as string;
-        const ptextWidth = ctx.measureText(ptext).width;
-        const px = (canvasRef.current.width - ptextWidth) / 2;
-        const py = canvasRef.current.height / 2 + parseInt(ctx.font, 10) / 2;
-        ctx.fillText(ptext, px, py - 20);
-        // Secondary Text
-        ctx.font = "20px Arial";
-        ctx.fillStyle = "#000000";
-        const stext = context?.data.texts.secondary?.text as string;
-        const stextWidth = ctx.measureText(stext).width;
-        const sx = (canvasRef.current.width - stextWidth) / 2;
-        const sy = canvasRef.current.height / 2 + parseInt(ctx.font, 10) / 2;
-        ctx.fillText(stext, sx, sy + 20);
+const Canvas = forwardRef<HTMLCanvasElement, React.ComponentProps<"canvas">>(
+  function MyCanvas(props, ref) {
+    const context = useContext(DataContext);
+    const bannerSize = {
+      w: 1500,
+      h: 600,
+    };
+
+    useEffect(() => {
+      if (ref && typeof ref !== "function" && ref.current) {
+        console.log(ref);
+        const ratio = window.devicePixelRatio;
+        const ctx = ref.current.getContext("2d");
+        if (ctx) {
+          const backgroundColor = context?.data.background.color || "#FFFFFF";
+          const primaryText = context?.data.texts.primary?.text || "";
+          const secondaryText = context?.data.texts.secondary?.text || "";
+
+          // Set background color
+          ctx.fillStyle = backgroundColor;
+          ctx.fillRect(0, 0, ref.current.width, ref.current.height);
+
+          // Primary Text
+          ctx.font = "50px Arial";
+          ctx.fillStyle = context?.data.texts.secondary?.color as string;
+          const ptextWidth = ctx.measureText(primaryText).width;
+          const px = (ref.current.width - ptextWidth) / 2;
+          const py = ref.current.height / 2 + 50 / 2;
+          ctx.fillText(primaryText, px, py - 20);
+
+          // Secondary Text
+          ctx.font = "20px Arial";
+          ctx.fillStyle = context?.data.texts.primary?.color as string;
+          const stextWidth = ctx.measureText(secondaryText).width;
+          const sx = (ref.current.width - stextWidth) / 2;
+          const sy = ref.current.height / 2 + 20 / 2;
+          ctx.fillText(secondaryText, sx, sy + 20);
+        }
       }
-    }
-  }, [context?.data]);
-  return (
-    <div>
-      <canvas
-        ref={canvasRef}
-        width={bannerSize.w / 2}
-        height={bannerSize.h / 2}
-        style={{ border: "2px solid black" }}
-      />
-    </div>
-  );
-};
+    }, [
+      context?.data.background.color,
+      context?.data.texts.primary?.color,
+      context?.data.texts.primary?.text,
+      context?.data.texts.secondary?.color,
+      context?.data.texts.secondary?.text,
+      ref,
+    ]);
+
+    return (
+      <div>
+        <canvas
+          ref={ref}
+          width={bannerSize.w / 2}
+          height={bannerSize.h / 2}
+          style={{ border: "2px solid black" }}
+          {...props} // Spread any additional props to the canvas
+        />
+      </div>
+    );
+  }
+);
 
 export default Canvas;

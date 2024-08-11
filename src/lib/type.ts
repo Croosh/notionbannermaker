@@ -8,11 +8,12 @@ export interface AppContextType {
 
 interface Background {
   type?: "color" | "image";
-  color: string;
+  color?: string;
 }
 
 interface Text {
   text: string;
   font?: string;
   size?: string;
+  color?: string;
 }

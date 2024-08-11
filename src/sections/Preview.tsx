@@ -9,7 +9,7 @@ function Preview() {
   console.log(canvasRef.current);
   return (
     <div className=" w-2/3 bg-gray-300 min-h-screen p-4 flex justify-center items-center relative flex-col gap-4">
-      <Canvas />
+      <Canvas ref={canvasRef} />
       <Button
         onClick={() => {
           console.log("Downloading");

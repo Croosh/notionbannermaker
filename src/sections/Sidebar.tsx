@@ -5,11 +5,22 @@ import { Button, Input } from "@chakra-ui/react";
 import BackgroundPinkder from "../components/BackgroundPicker";
 function SideBar() {
   const context = useContext(DataContext);
-  const [color, setColor] = useState("#ef3fa4");
+  const [bgColor, setBGColor] = useState("#ef3fa4");
+  const [textColor, setTextColor] = useState("#000000");
   const handleBGChange = (e: string) => {
     context?.setData({
       ...context.data,
       background: { ...context.data.background, color: e },
+    });
+  };
+  const handleTextChange = (e: string) => {
+    context?.setData({
+      ...context.data,
+      texts: {
+        ...context.data.texts,
+        primary: { ...context.data.texts.primary, color: e },
+        secondary: { ...context.data.texts.secondary, color: e },
+      },
     });
   };
   return (
@@ -53,17 +64,39 @@ function SideBar() {
             variant={"filled"}
           />
         </div>
-        <HexColorPicker
-          color={color}
-          onChange={(e) => {
-            handleBGChange(e);
-            setColor(e);
-            console.log(context?.data);
-          }}
-          className=" resposive "
-        />
+        <div className="flex gap-2 justify-betweens">
+          <div className="flex flex-col justify-center items-center gap-2">
+            <label htmlFor="bgColorPicker">Background Color</label>
+            <HexColorPicker
+              id="bgColorPicker"
+              color={bgColor}
+              onChange={(e) => {
+                handleBGChange(e);
+                setBGColor(e);
+                console.log(context?.data);
+              }}
+              className=" resposive "
+            />
+          </div>
+          <div className="flex flex-col justify-center items-center gap-2">
+            <label htmlFor="textColorPicker">Text Color</label>
+            <HexColorPicker
+              id="textColorPicker"
+              color={textColor}
+              onChange={(e) => {
+                handleTextChange(e);
+                setTextColor(e);
+                console.log(context?.data);
+              }}
+              className=" resposive "
+            />
+          </div>
+        </div>
       </div>
-      <div className="flex w-full h-8" style={{ backgroundColor: color }}></div>
+      <div
+        className="flex w-full h-8"
+        style={{ backgroundColor: bgColor }}
+      ></div>
       <Button colorScheme="pink" onClick={() => console.log(context?.data)}>
         Log
       </Button>

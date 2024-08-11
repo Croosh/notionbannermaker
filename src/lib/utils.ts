@@ -2,8 +2,13 @@ import { AppContextType } from "./type";
 import html2canvas from "html2canvas";
 export const defaultAppData: AppContextType = {
   texts: {
-    primary: { text: "Hello", font: "serif", size: "M" },
-    secondary: { text: "World", font: "sans-serif", size: "SM" },
+    primary: { text: "Hello", font: "serif", size: "M", color: "#000000" },
+    secondary: {
+      text: "World",
+      font: "sans-serif",
+      size: "SM",
+      color: "#000000",
+    },
   },
   background: { color: "#F81CB4", type: "color" },
 };
