@@ -15,9 +15,10 @@ function Preview() {
           console.log("Downloading");
           if (canvasRef.current) exportAsImage(canvasRef.current, "Banner");
         }}
-        className=" absolute left-0 flex gap-2"
+        colorScheme={"green"}
+        className=" absolute left-0 flex gap-2 group"
       >
-        <Download width={18} />
+        <Download width={18} className=" group-hover:animate-bounce" />
         Download
       </Button>
     </div>

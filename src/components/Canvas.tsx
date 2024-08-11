@@ -12,7 +12,6 @@ const Canvas = forwardRef<HTMLCanvasElement, React.ComponentProps<"canvas">>(
     useEffect(() => {
       if (ref && typeof ref !== "function" && ref.current) {
         console.log(ref);
-        const ratio = window.devicePixelRatio;
         const ctx = ref.current.getContext("2d");
         if (ctx) {
           const backgroundColor = context?.data.background.color || "#FFFFFF";
@@ -50,13 +49,12 @@ const Canvas = forwardRef<HTMLCanvasElement, React.ComponentProps<"canvas">>(
     ]);
 
     return (
-      <div>
+      <div className="shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
         <canvas
           ref={ref}
           width={bannerSize.w / 2}
           height={bannerSize.h / 2}
-          style={{ border: "2px solid black" }}
-          {...props} // Spread any additional props to the canvas
+          {...props}
         />
       </div>
     );
