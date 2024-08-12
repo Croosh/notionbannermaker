@@ -2,15 +2,15 @@ import { AppContextType } from "./type";
 import html2canvas from "html2canvas";
 export const defaultAppData: AppContextType = {
   texts: {
-    primary: { text: "Hello", font: "serif", size: "M", color: "#000000" },
+    primary: { text: "Hello", font: "serif", size: "M", color: "#f4ecc6" },
     secondary: {
-      text: "World",
+      text: "",
       font: "sans-serif",
-      size: "SM",
-      color: "#000000",
+      size: "S",
+      color: "#f4ecc6",
     },
   },
-  background: { color: "#F81CB4", type: "color" },
+  background: { color: "#4e1629", type: "color" },
 };
 const downloadImage = (blob: string, fileName: string) => {
   const fakeLink = window.document.createElement("a");
@@ -33,3 +33,6 @@ export const exportAsImage = async (
   const image = canvas.toDataURL("image/png", 1.0);
   downloadImage(image, imageFileName);
 };
+
+export const textSizes = ["S", "M", "L", "XL"];
+export const textFonts = ["sans-serif", "serif", "monospace", "handwriting"];

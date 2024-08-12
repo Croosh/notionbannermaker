@@ -11,10 +11,11 @@ Major Goals for the project:
 
 ## Roadmap
 
-- [ ] Refactor
+- [x] Refactor
+- [ ] More Refactoring
 - [ ] Responsive Canvas
 - [ ] Clean Up the UI
-- [ ] Fonts and Size
+- [x] Fonts and Size
 - [ ] Image as Background
 
 ## Development

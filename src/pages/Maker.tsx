@@ -8,7 +8,7 @@ function Maker() {
   const [data, setData] = useState(defaultAppData);
   return (
     <DataContext.Provider value={{ data, setData }}>
-      <div className=" flex overflow-hidden">
+      <div className=" flex overflow-hidden max-md:flex-col">
         <SideBar />
         <Preview />
       </div>
