@@ -1,14 +1,7 @@
 import { useContext, useState } from "react";
 import { DataContext } from "../lib/context";
 import { HexColorPicker } from "react-colorful";
-import {
-  Button,
-  Card,
-  CardBody,
-  CardHeader,
-  Heading,
-  Input,
-} from "@chakra-ui/react";
+import { Button, Card, CardBody, Input } from "@chakra-ui/react";
 import BackgroundPinkder from "../components/BackgroundPicker";
 function SideBar() {
   const context = useContext(DataContext);
@@ -31,7 +24,7 @@ function SideBar() {
     });
   };
   return (
-    <div className="flex flex-col w-1/3 bg-gray-200 p-4 gap-4 h-screen overflow-scroll">
+    <div className="flex flex-col w-1/3 bg-gray-200 p-4 gap-4 h-screen overflow-y-scroll overflow-x-hidden">
       <Card>
         <CardBody className=" ">
           <div className="flex flex-col gap-2 pb-4">

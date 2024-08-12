@@ -12,7 +12,7 @@ interface Background {
 }
 
 interface Text {
-  text: string;
+  text?: string;
   font?: string;
   size?: string;
   color?: string;

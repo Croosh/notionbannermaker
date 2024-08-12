@@ -11,35 +11,48 @@ const Canvas = forwardRef<HTMLCanvasElement, React.ComponentProps<"canvas">>(
 
     useEffect(() => {
       if (ref && typeof ref !== "function" && ref.current) {
-        console.log(ref);
-        const ctx = ref.current.getContext("2d");
+        const canvas = ref.current;
+        const ctx = canvas.getContext("2d");
+
         if (ctx) {
-          const backgroundColor = context?.data.background.color || "#FFFFFF";
-          const primaryText = context?.data.texts.primary?.text || "";
-          const secondaryText = context?.data.texts.secondary?.text || "";
+          const scale = window.devicePixelRatio * 2;
+          canvas.width = Math.floor(bannerSize.w * scale);
+          canvas.height = Math.floor(bannerSize.h * scale);
+
+          ctx.scale(scale, scale);
 
           // Set background color
+          const backgroundColor = context?.data.background.color || "#FFFFFF";
           ctx.fillStyle = backgroundColor;
-          ctx.fillRect(0, 0, ref.current.width, ref.current.height);
+          ctx.fillRect(0, 0, bannerSize.w, bannerSize.h);
+          const secondaryText = context?.data.texts.secondary?.text || "";
 
           // Primary Text
-          ctx.font = "50px Arial";
-          ctx.fillStyle = context?.data.texts.secondary?.color as string;
+          const primaryText = context?.data.texts.primary?.text || "";
+          ctx.font = "120px Inter";
+          ctx.fillStyle = context?.data.texts.primary?.color || "#000000";
           const ptextWidth = ctx.measureText(primaryText).width;
-          const px = (ref.current.width - ptextWidth) / 2;
-          const py = ref.current.height / 2 + 50 / 2;
-          ctx.fillText(primaryText, px, py - 20);
+          const px = (bannerSize.w - ptextWidth) / 2;
+          let py: number;
+          if (secondaryText !== "") {
+            py = bannerSize.h / 2;
+          } else {
+            py = bannerSize.h / 2 + 40;
+          }
+          ctx.fillText(primaryText, px, py);
 
           // Secondary Text
-          ctx.font = "20px Arial";
-          ctx.fillStyle = context?.data.texts.primary?.color as string;
+          ctx.font = "60px Inter";
+          ctx.fillStyle = context?.data.texts.secondary?.color || "#000000";
           const stextWidth = ctx.measureText(secondaryText).width;
-          const sx = (ref.current.width - stextWidth) / 2;
-          const sy = ref.current.height / 2 + 20 / 2;
-          ctx.fillText(secondaryText, sx, sy + 20);
+          const sx = (bannerSize.w - stextWidth) / 2;
+          const sy = bannerSize.h / 2 + 70;
+          ctx.fillText(secondaryText, sx, sy);
         }
       }
     }, [
+      bannerSize.h,
+      bannerSize.w,
       context?.data.background.color,
       context?.data.texts.primary?.color,
       context?.data.texts.primary?.text,
@@ -50,12 +63,7 @@ const Canvas = forwardRef<HTMLCanvasElement, React.ComponentProps<"canvas">>(
 
     return (
       <div className="shadow-[rgba(13,_38,_76,_0.19)_0px_9px_20px]">
-        <canvas
-          ref={ref}
-          width={bannerSize.w / 2}
-          height={bannerSize.h / 2}
-          {...props}
-        />
+        <canvas ref={ref} className="w-[750px] h-[300px]" {...props} />
       </div>
     );
   }
